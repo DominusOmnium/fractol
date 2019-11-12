@@ -6,17 +6,17 @@
 #    By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/18 12:08:40 by dkathlee          #+#    #+#              #
-#    Updated: 2019/11/11 20:25:56 by dkathlee         ###   ########.fr        #
+#    Updated: 2019/11/12 13:33:54 by dkathlee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = fdf
+NAME = fractol
 
 SRCDIR = srcs/
 INCDIR = includes/
 OBJDIR = obj/
 
-SRCS =	main.c \
+SRCS =	main.c init.c hooks.c\
 
 OBJS = $(addprefix $(OBJDIR), $(SRCS:.c=.o))
 
