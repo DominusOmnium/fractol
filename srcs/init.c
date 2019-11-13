@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:36:01 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/11/12 14:46:35 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/11/13 17:41:05 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,34 +21,43 @@ static void		free_all(t_view *view)
 		mlx_destroy_window(view->mlx, view->win);
 }
 
-void			init_fractal(t_fractal *f, char *fr)
+int				init_fractal(t_fractal *f, char *fr)
 {
 	if (ft_strcmp(fr, "julia") == 0)
 		f->type = fr_julia;
 	else if (ft_strcmp(fr, "mandelbrot") == 0)
 		f->type = fr_mandelbrot;
+	else
+		return (0);
 	f->x_start = WIDTH / -500.0;
 	f->x_end = WIDTH / 500.0;
 	f->y_start = HEIGHT / -500.0;
 	f->y_end = HEIGHT / 500.0;
-	f->max_iter = 50;
+	f->p_width = (f->x_end - f->x_start) / WIDTH;
+    f->p_height = (f->y_end - f->y_start) / HEIGHT;
+	f->max_iter = 25;
+	f->offset_x = 0;
+	f->offset_y = 0;
+	return (1);
 }
 
-t_view			*init_view(void)
+int				init_view(t_view **view)
 {
-	t_view	*view;
-
-	if ((view = ft_memalloc(sizeof(t_view))) == NULL ||
-		(view->mlx = mlx_init()) == NULL ||
-		(view->win = mlx_new_window(view->mlx, WIDTH, HEIGHT, "Fractol")) == NULL ||
-		(view->img = mlx_new_image(view->mlx, WIDTH, HEIGHT)) == NULL ||
-		(view->data_addr = (t_color*)mlx_get_data_addr(view->img, &(view->bpp),
-		&(view->line_size), &(view->endian))) == NULL)
+	if ((*view = ft_memalloc(sizeof(t_view))) == NULL ||
+		((*view)->mlx = mlx_init()) == NULL ||
+		((*view)->win = mlx_new_window((*view)->mlx, WIDTH, HEIGHT, "Fractol")) == NULL ||
+		((*view)->img = mlx_new_image((*view)->mlx, WIDTH, HEIGHT)) == NULL ||
+		((*view)->data_addr = (int*)mlx_get_data_addr((*view)->img, &((*view)->bpp),
+		&((*view)->line_size), &((*view)->endian))) == NULL)
 	{
-		free_all(view);
-		return (NULL);
+		free_all(*view);
+		*view = NULL;
+		return (0);
 	}
-	return (view);
+	(*view)->mouse.is_pressed = false;
+	(*view)->mouse.prev_x = -1;
+	(*view)->mouse.prev_y = -1;
+	return (1);
 }
 
 static int		wind_close(void *param)
