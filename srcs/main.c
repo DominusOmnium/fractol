@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 14:47:25 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/11/13 15:57:08 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/11/14 15:52:26 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	return_mes(char *s, int ret)
 	return (ret);
 }
 
-int	main(int ac, char **av)
+int			main(int ac, char **av)
 {
 	t_view	*v;
 

@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 12:38:51 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/11/13 17:14:42 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/11/14 18:02:24 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,28 @@ typedef enum
 {
 	fr_julia, fr_mandelbrot
 }	t_fractal_type;
-typedef struct	s_color
+typedef struct	s_rgba
 {
-	char	r;
-	char	g;
-	char	b;
-	char	a;
+	uint8_t		b;
+	uint8_t		g;
+	uint8_t		r;
+	uint8_t		a;
+}				t_rgba;
+typedef union	u_color
+{
+	t_rgba		rgba;
+	int			value;
 }				t_color;
+typedef struct	s_complex
+{
+	long double	r;
+	long double	i;
+}				t_complex;
 typedef struct	s_mouse
 {
 	t_bool		is_pressed;
+	int			x;
+	int			y;
 	int			prev_x;
 	int			prev_y;
 }				t_mouse;
@@ -44,8 +56,6 @@ typedef struct	s_fractal
 	long double		y_start;
 	long double		y_end;
 	int				max_iter;
-	int				offset_x;
-	int				offset_y;
 	long double		p_width;
 	long double		p_height;
 }				t_fractal;
@@ -70,4 +80,5 @@ int				init_view(t_view **view);
 int				init_fractal(t_fractal *f, char *fr);
 void			setup_hooks(t_view *v);
 void			draw_fractal(t_view *v);
+int				hsv_to_rgb(int h, int s, int v);
 #endif

@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:36:01 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/11/13 17:41:05 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/11/14 15:54:45 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,20 @@ int				init_fractal(t_fractal *f, char *fr)
 	f->y_start = HEIGHT / -500.0;
 	f->y_end = HEIGHT / 500.0;
 	f->p_width = (f->x_end - f->x_start) / WIDTH;
-    f->p_height = (f->y_end - f->y_start) / HEIGHT;
+	f->p_height = (f->y_end - f->y_start) / HEIGHT;
 	f->max_iter = 25;
-	f->offset_x = 0;
-	f->offset_y = 0;
 	return (1);
 }
 
 int				init_view(t_view **view)
 {
 	if ((*view = ft_memalloc(sizeof(t_view))) == NULL ||
-		((*view)->mlx = mlx_init()) == NULL ||
-		((*view)->win = mlx_new_window((*view)->mlx, WIDTH, HEIGHT, "Fractol")) == NULL ||
-		((*view)->img = mlx_new_image((*view)->mlx, WIDTH, HEIGHT)) == NULL ||
-		((*view)->data_addr = (int*)mlx_get_data_addr((*view)->img, &((*view)->bpp),
-		&((*view)->line_size), &((*view)->endian))) == NULL)
+	((*view)->mlx = mlx_init()) == NULL ||
+	((*view)->win = mlx_new_window((*view)->mlx, WIDTH,
+									HEIGHT, "Fractol")) == NULL ||
+	((*view)->img = mlx_new_image((*view)->mlx, WIDTH, HEIGHT)) == NULL ||
+	((*view)->data_addr = (int*)mlx_get_data_addr((*view)->img, &((*view)->bpp),
+	&((*view)->line_size), &((*view)->endian))) == NULL)
 	{
 		free_all(*view);
 		*view = NULL;

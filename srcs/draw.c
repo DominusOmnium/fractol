@@ -6,13 +6,13 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 13:24:18 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/11/13 17:40:51 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/11/14 18:04:30 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-static void		put_pixel_img(int x, int y, int color, t_view *v)
+static void			put_pixel_img(int x, int y, int color, t_view *v)
 {
 	int			i;
 
@@ -20,52 +20,83 @@ static void		put_pixel_img(int x, int y, int color, t_view *v)
 	(v->data_addr)[i] = color;
 }
 
-static int		mandelbrot(long double cx, long double cy, int max_iter)
+static t_complex	screen_to_complex(int x, int y, t_view *v)
 {
-	double	zx;
-	double	zy;
-	double	zx2;
-	double	zy2;
-	int		n;
+	t_complex	c;
 
-	zx = 0;
-	zy = 0;
-	zx2 = 0;
-	zy2 = 0;
+	c.i = v->fract.y_start + y * v->fract.p_height;
+	c.r = v->fract.x_start + x * v->fract.p_width;
+	return (c);
+}
+
+static int			mandelbrot(t_complex cxy, t_fractal f)
+{
+	t_complex	c;
+	t_complex	c2;
+	int			n;
+
+	c.r = 0;
+	c.i = 0;
+	c2.r = 0;
+	c2.i = 0;
 	n = 0;
-	while (zx2 + zy2 < 4 && n < max_iter)
+	while (c2.r + c2.i < 4 && n < f.max_iter)
 	{
-		zy = 2 * zx * zy + cy;
-		zx = zx2 - zy2 + cx;
-		zx2 = zx * zx;
-		zy2 = zy * zy;
+		c.i = 2 * c.r * c.i + cxy.i;
+		c.r = c2.r - c2.i + cxy.r;
+		c2.r = c.r * c.r;
+		c2.i = c.i * c.i;
 		n++;
 	}
 	return (n);
 }
 
-static int	calc_color(int m, int max_iter)
+static int			julia(int x, int y, t_complex cxy, t_view *v)
 {
-	int color;
+	t_complex	c;
+	t_complex	c2;
+	int			n;
 
-	color = 255 - 255.0 * (1.0 - m / max_iter);
-	return (color | color << 8 | color << 16);
+	c = screen_to_complex(x, y, v);
+	c2.r = c.r * c.r;
+	c2.i = c.i * c.i;
+	n = 0;
+	while (c2.r + c2.i < 4 && n < v->fract.max_iter)
+	{
+		c.i = 2 * c.r * c.i + cxy.i;
+		c.r = c2.r - c2.i + cxy.r;
+		c2.r = c.r * c.r;
+		c2.i = c.i * c.i;
+		n++;
+	}
+	return (n);
 }
 
-void			draw_fractal(t_view *v)
+void				draw_fractal(t_view *v)
 {
 	int			i;
 	int			j;
-	long double	cy;
+	int			n;
+	t_complex	c;
 
 	i = 0;
+	if (v->fract.type == fr_julia)
+		c = screen_to_complex(v->mouse.x, v->mouse.y, v);
 	while (i < HEIGHT)
 	{
-		cy = v->fract.y_start + i * v->fract.p_height;
+		if (v->fract.type == fr_mandelbrot)
+			c.i = v->fract.y_start + i * v->fract.p_height;
 		j = 0;
 		while (j < WIDTH)
 		{
-			put_pixel_img(j, i, calc_color(mandelbrot(v->fract.x_start + j * v->fract.p_width, cy, v->fract.max_iter), v->fract.max_iter), v);
+			if (v->fract.type == fr_mandelbrot)
+				c.r = v->fract.x_start + j * v->fract.p_width;
+			if (v->fract.type == fr_mandelbrot)
+				n = mandelbrot(c, v->fract);
+			else if (v->fract.type == fr_julia)
+				n = julia(j, i, c, v);
+			put_pixel_img(j, i, hsv_to_rgb(n % 360, 255 * ((long double)n / v->fract.max_iter),
+											255 * (n < v->fract.max_iter)), v);
 			j++;
 		}
 		i++;
