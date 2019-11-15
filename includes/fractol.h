@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 12:38:51 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/11/14 18:02:24 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/11/15 16:28:31 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include <stdio.h>
 # include <mlx.h>
 # include <math.h>
+# include <OpenCL/opencl.h>
 # include "libft.h"
 # include "buttons.h"
 # include "def_values.h"
@@ -51,13 +52,14 @@ typedef struct	s_mouse
 typedef struct	s_fractal
 {
 	t_fractal_type	type;
-	long double		x_start;
-	long double		x_end;
-	long double		y_start;
-	long double		y_end;
+	long double		r_start;
+	long double		r_end;
+	long double		i_start;
+	long double		i_end;
 	int				max_iter;
 	long double		p_width;
 	long double		p_height;
+	t_bool			smooth;
 }				t_fractal;
 typedef struct	s_view
 {
@@ -68,6 +70,7 @@ typedef struct	s_view
 	int			bpp;
 	int			line_size;
 	int			endian;
+	t_bool		shift;
 	t_mouse		mouse;
 	t_fractal	fract;
 }				t_view;
@@ -75,10 +78,16 @@ typedef struct	s_view
 int				mouse_press(int b, int x, int y, t_view *v);
 int				mouse_release(int b, int x, int y, t_view *v);
 int				key_press(int k, t_view *v);
+int				key_release(int k, t_view *v);
 int				mouse_move(int x, int y, t_view *v);
 int				init_view(t_view **view);
 int				init_fractal(t_fractal *f, char *fr);
-void			setup_hooks(t_view *v);
+void			setup_hooks(t_view **v);
 void			draw_fractal(t_view *v);
 int				hsv_to_rgb(int h, int s, int v);
+long double		mandelbrot(t_complex cxy, t_fractal f);
+void			setup_mandelbrot(t_fractal *f);
+long double		julia(int x, int y, t_complex cxy, t_view *v);
+void			setup_julia(t_fractal *f);
+t_complex		screen_to_complex(int x, int y, t_view *v);
 #endif

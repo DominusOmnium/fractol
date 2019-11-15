@@ -6,70 +6,81 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:36:01 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/11/14 15:54:45 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/11/15 16:26:34 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-static void		free_all(t_view *view)
+static int		free_all(t_view **view)
 {
-	ft_memdel((void**)&view);
-	if (view->img != NULL)
-		mlx_destroy_image(view->mlx, view->img);
-	if (view->win != NULL)
-		mlx_destroy_window(view->mlx, view->win);
+	if ((*view)->img != NULL)
+		mlx_destroy_image((*view)->mlx, (*view)->img);
+	if ((*view)->win != NULL)
+		mlx_destroy_window((*view)->mlx, (*view)->win);
+	ft_memdel((void**)view);
+	return (0);
 }
 
 int				init_fractal(t_fractal *f, char *fr)
 {
 	if (ft_strcmp(fr, "julia") == 0)
-		f->type = fr_julia;
+		setup_julia(f);
 	else if (ft_strcmp(fr, "mandelbrot") == 0)
-		f->type = fr_mandelbrot;
+		setup_mandelbrot(f);
 	else
 		return (0);
-	f->x_start = WIDTH / -500.0;
-	f->x_end = WIDTH / 500.0;
-	f->y_start = HEIGHT / -500.0;
-	f->y_end = HEIGHT / 500.0;
-	f->p_width = (f->x_end - f->x_start) / WIDTH;
-	f->p_height = (f->y_end - f->y_start) / HEIGHT;
 	f->max_iter = 25;
+	f->smooth = true;
 	return (1);
 }
 
 int				init_view(t_view **view)
 {
+	
 	if ((*view = ft_memalloc(sizeof(t_view))) == NULL ||
 	((*view)->mlx = mlx_init()) == NULL ||
-	((*view)->win = mlx_new_window((*view)->mlx, WIDTH,
-									HEIGHT, "Fractol")) == NULL ||
 	((*view)->img = mlx_new_image((*view)->mlx, WIDTH, HEIGHT)) == NULL ||
 	((*view)->data_addr = (int*)mlx_get_data_addr((*view)->img, &((*view)->bpp),
-	&((*view)->line_size), &((*view)->endian))) == NULL)
-	{
-		free_all(*view);
-		*view = NULL;
-		return (0);
-	}
+	&((*view)->line_size), &((*view)->endian))) == NULL ||
+	((*view)->win = mlx_new_window((*view)->mlx, WIDTH,
+									HEIGHT, "Fractol")) == NULL)
+		return (free_all(view));
 	(*view)->mouse.is_pressed = false;
 	(*view)->mouse.prev_x = -1;
 	(*view)->mouse.prev_y = -1;
+	(*view)->shift = false;
 	return (1);
 }
 
-static int		wind_close(void *param)
+static int		wind_close(t_view **v)
 {
-	(void)param;
+	free_all(v);
 	exit(0);
 }
 
-void			setup_hooks(t_view *v)
+void			setup_hooks(t_view **v)
 {
-	mlx_mouse_hook(v->win, &mouse_press, v);
-	mlx_hook(v->win, 5, 0, &mouse_release, v);
-	mlx_hook(v->win, 6, 0, &mouse_move, v);
-	mlx_key_hook(v->win, &key_press, v);
-	mlx_hook(v->win, 17, 0, &wind_close, v);
+	mlx_mouse_hook((*v)->win, &mouse_press, *v);
+	mlx_hook((*v)->win, KEY_PRESS_EVENT, 0, &key_press, *v);
+	mlx_hook((*v)->win, KEY_RELESE_EVENT, 0, &key_release, *v);
+	mlx_hook((*v)->win, MOUSE_RELESE_EVENT, 0, &mouse_release, *v);
+	mlx_hook((*v)->win, MOUSE_MOVE_EVENT, 0, &mouse_move, *v);
+	mlx_hook((*v)->win, WIND_CLOSE_EVENT, 0, &wind_close, v);
+}
+
+void	test1()
+{
+	cl_platform_id		platform_id;
+	cl_device_id		device_id;
+	cl_uint				ret_num_platforms;
+	cl_uint				ret_num_devices;
+	cl_int				ret;
+	cl_context			context;
+	cl_command_queue	command_queue;
+	
+	ret = clGetPlatformIDs(1, &platform_id, &ret_num_platforms);
+	ret = clGetDeviceIDs(platform_id, CL_DEVICE_TYPE_DEFAULT, 1, &device_id, &ret_num_devices);
+	context = clCreateContext(NULL, 1, &device_id, NULL, NULL, &ret);
+	command_queue = clCreateCommandQueue(context, device_id, 0, &ret);
 }

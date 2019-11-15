@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 14:47:25 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/11/14 15:52:26 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/11/15 11:47:22 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ int			main(int ac, char **av)
 	if (init_fractal(&(v->fract), av[1]) == 0)
 		return (return_mes(USAGE, 0));
 	draw_fractal(v);
-	setup_hooks(v);
+	setup_hooks(&v);
 	mlx_loop(v->mlx);
 }

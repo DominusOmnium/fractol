@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 13:01:22 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/11/07 12:11:35 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/11/15 15:20:04 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 # define KEYS_H
 # define BTN_MOUSE_LEFT			1
 # define BTN_MOUSE_RIGHT		2
-# define BTN_MOUSE_WHEEL_UP		5
-# define BTN_MOUSE_WHEEL_DOWN	4
+# define BTN_MOUSE_SCROLL_UP	4
+# define BTN_MOUSE_SCROLL_DOWN	5
+# define BTN_MOUSE_SCROLL_LEFT	6
+# define BTN_MOUSE_SCROLL_RIGHT	7
 # define BTN_Q					12
 # define BTN_W					13
 # define BTN_A					0
@@ -28,4 +30,8 @@
 # define BTN_C					8
 # define BTN_R					15
 # define BTN_ESC				53
+# define BTN_NUM_MIN			78
+# define BTN_NUM_PLUS			69
+# define BTN_LSHIFT				257
+# define BTN_RSHIFT				258
 #endif
