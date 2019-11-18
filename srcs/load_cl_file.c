@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 19:37:44 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/11/18 20:47:22 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/11/18 21:01:01 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,26 @@ static void	throw_kernel(char *errmsg)
 {
 	printf(2, "OpenCL: %s;\n", errmsg);
 	exit(1);
+}
+
+static void	set_kernel_args(t_view *v)
+{
+	int		err;
+
+	err = clSetKernelArg(v->cl.kernel, 0, sizeof(cl_mem), &cl->output);
+	err |= clSetKernelArg(v->cl.kernel, 1, sizeof(double), &w.d_zoom_x);
+	err |= clSetKernelArg(cl->kernel, 2, sizeof(double), &w.d_zoom_y);
+	err |= clSetKernelArg(cl->kernel, 3, sizeof(int), &w.center_x);
+	err |= clSetKernelArg(cl->kernel, 4, sizeof(int), &w.center_y);
+	err |= clSetKernelArg(cl->kernel, 5, sizeof(double), &w.offset_x);
+	err |= clSetKernelArg(cl->kernel, 6, sizeof(double), &w.offset_y);
+	err |= clSetKernelArg(cl->kernel, 7, sizeof(int), &w.mouse_x);
+	err |= clSetKernelArg(cl->kernel, 8, sizeof(int), &w.mouse_y);
+	err |= clSetKernelArg(cl->kernel, 9, sizeof(char), &w.colorft_num);
+	err |= clSetKernelArg(cl->kernel, 10, sizeof(int), &w.itermax);
+	err |= clSetKernelArg(cl->kernel, 11, sizeof(char), &w.fractalft_num);
+	if (err != CL_SUCCESS)
+		throw_kernel("Failed to set kernel arguments");
 }
 
 void		draw_gpu_fractal(t_view *v)
