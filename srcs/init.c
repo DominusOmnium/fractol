@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:36:01 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/11/15 16:26:34 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/11/18 20:43:14 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,20 +67,4 @@ void			setup_hooks(t_view **v)
 	mlx_hook((*v)->win, MOUSE_RELESE_EVENT, 0, &mouse_release, *v);
 	mlx_hook((*v)->win, MOUSE_MOVE_EVENT, 0, &mouse_move, *v);
 	mlx_hook((*v)->win, WIND_CLOSE_EVENT, 0, &wind_close, v);
-}
-
-void	test1()
-{
-	cl_platform_id		platform_id;
-	cl_device_id		device_id;
-	cl_uint				ret_num_platforms;
-	cl_uint				ret_num_devices;
-	cl_int				ret;
-	cl_context			context;
-	cl_command_queue	command_queue;
-	
-	ret = clGetPlatformIDs(1, &platform_id, &ret_num_platforms);
-	ret = clGetDeviceIDs(platform_id, CL_DEVICE_TYPE_DEFAULT, 1, &device_id, &ret_num_devices);
-	context = clCreateContext(NULL, 1, &device_id, NULL, NULL, &ret);
-	command_queue = clCreateCommandQueue(context, device_id, 0, &ret);
 }

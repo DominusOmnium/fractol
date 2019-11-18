@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 12:38:51 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/11/15 16:28:31 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/11/18 20:42:55 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,18 @@ typedef struct	s_mouse
 	int			prev_x;
 	int			prev_y;
 }				t_mouse;
+typedef struct	s_cl
+{
+	int					err;
+	cl_device_id		device_id;
+	cl_context			context;
+	cl_command_queue	commands;
+	cl_program			program;
+	cl_kernel			kernel;
+	cl_mem				output;
+	size_t				local;
+	size_t				global;
+}				t_cl;
 typedef struct	s_fractal
 {
 	t_fractal_type	type;
@@ -73,6 +85,7 @@ typedef struct	s_view
 	t_bool		shift;
 	t_mouse		mouse;
 	t_fractal	fract;
+	t_cl		cl;
 }				t_view;
 
 int				mouse_press(int b, int x, int y, t_view *v);
@@ -90,4 +103,5 @@ void			setup_mandelbrot(t_fractal *f);
 long double		julia(int x, int y, t_complex cxy, t_view *v);
 void			setup_julia(t_fractal *f);
 t_complex		screen_to_complex(int x, int y, t_view *v);
+char			*load_cl_file(char *fname);
 #endif

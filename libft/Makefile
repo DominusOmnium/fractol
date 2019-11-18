@@ -6,7 +6,7 @@
 #    By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/03 14:02:51 by dkathlee          #+#    #+#              #
-#    Updated: 2019/10/24 14:07:22 by dkathlee         ###   ########.fr        #
+#    Updated: 2019/11/18 20:03:47 by dkathlee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ SRCS =	ft_atoi.c ft_btree_apply_infix.c ft_btree_apply_prefix.c \
 	ft_realloc.c ft_dlst_create_elem.c ft_dlst_create_elemc.c \
 	ft_dlst_push_front.c ft_dlst_push_back.c ft_dlst_deli.c ft_dlst_delete.c \
 	ft_dlst_geti.c ft_dlst_popi.c ft_dlst_len.c ft_dlst_push_sort.c \
-	ft_dlst_index_of.c ft_dlst_pop.c get_next_line.c ft_word_count.c
+	ft_dlst_index_of.c ft_dlst_pop.c get_next_line.c ft_word_count.c ft_strjoin2.c
 
 OBJECTS = $(addprefix $(OBJDIR), $(SRCS:.c=.o))
 
