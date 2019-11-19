@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 13:24:18 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/11/15 15:09:34 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/11/19 20:03:46 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ void		draw_fractal(t_view *v)
 	long double	n;
 	t_complex	c;
 
+	/*draw_gpu_fractal(v);
+	mlx_put_image_to_window(v->mlx, v->win, v->img, 0, 0);
+	return;*/
 	i = 0;
 	if (v->fract.type == fr_julia)
 		c = screen_to_complex(v->mouse.x, v->mouse.y, v);

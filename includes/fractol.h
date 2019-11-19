@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 12:38:51 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/11/18 20:42:55 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/11/19 18:14:38 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ typedef union	u_color
 }				t_color;
 typedef struct	s_complex
 {
-	long double	r;
-	long double	i;
+	double	r;
+	double	i;
 }				t_complex;
 typedef struct	s_mouse
 {
-	t_bool		is_pressed;
+	int			is_pressed;
 	int			x;
 	int			y;
 	int			prev_x;
@@ -51,8 +51,7 @@ typedef struct	s_mouse
 }				t_mouse;
 typedef struct	s_cl
 {
-	int					err;
-	cl_device_id		device_id;
+	cl_device_id		device;
 	cl_context			context;
 	cl_command_queue	commands;
 	cl_program			program;
@@ -64,14 +63,14 @@ typedef struct	s_cl
 typedef struct	s_fractal
 {
 	t_fractal_type	type;
-	long double		r_start;
-	long double		r_end;
-	long double		i_start;
-	long double		i_end;
+	double		r_start;
+	double		r_end;
+	double		i_start;
+	double		i_end;
 	int				max_iter;
-	long double		p_width;
-	long double		p_height;
-	t_bool			smooth;
+	double		p_width;
+	double		p_height;
+	int				smooth;
 }				t_fractal;
 typedef struct	s_view
 {
@@ -82,7 +81,7 @@ typedef struct	s_view
 	int			bpp;
 	int			line_size;
 	int			endian;
-	t_bool		shift;
+	int			shift;
 	t_mouse		mouse;
 	t_fractal	fract;
 	t_cl		cl;
@@ -104,4 +103,6 @@ long double		julia(int x, int y, t_complex cxy, t_view *v);
 void			setup_julia(t_fractal *f);
 t_complex		screen_to_complex(int x, int y, t_view *v);
 char			*load_cl_file(char *fname);
+void		draw_gpu_fractal(t_view *v);
+void		init_kernel(t_cl *cl);
 #endif

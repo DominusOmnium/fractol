@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 14:02:24 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/11/18 20:04:09 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/11/19 12:58:56 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,6 @@ typedef unsigned char	t_uint8;
 typedef unsigned short	t_uint16;
 typedef unsigned int	t_uint32;
 typedef unsigned long	t_uint64;
-typedef enum
-{
-	false = 0,
-	true = 1
-}	t_bool;
 typedef struct	s_list
 {
 	void			*content;
