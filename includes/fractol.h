@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 12:38:51 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/11/19 18:14:38 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/11/20 17:14:06 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,12 @@
 
 typedef enum
 {
-	fr_julia, fr_mandelbrot
+	fr_julia, fr_mandelbrot, test
 }	t_fractal_type;
+typedef enum
+{
+	cpu, cpu_parallel, gpu_parallel
+}	t_draw_type;
 typedef struct	s_rgba
 {
 	uint8_t		b;
@@ -38,8 +42,8 @@ typedef union	u_color
 }				t_color;
 typedef struct	s_complex
 {
-	double	r;
-	double	i;
+	long double	r;
+	long double	i;
 }				t_complex;
 typedef struct	s_mouse
 {
@@ -63,13 +67,13 @@ typedef struct	s_cl
 typedef struct	s_fractal
 {
 	t_fractal_type	type;
-	double		r_start;
-	double		r_end;
-	double		i_start;
-	double		i_end;
+	long double		r_start;
+	long double		r_end;
+	long double		i_start;
+	long double		i_end;
 	int				max_iter;
-	double		p_width;
-	double		p_height;
+	long double		p_width;
+	long double		p_height;
 	int				smooth;
 }				t_fractal;
 typedef struct	s_view
@@ -82,9 +86,11 @@ typedef struct	s_view
 	int			line_size;
 	int			endian;
 	int			shift;
+	t_draw_type	draw_type;
 	t_mouse		mouse;
 	t_fractal	fract;
-	t_cl		cl;
+	t_cl		cl_gpu;
+	t_cl		cl_cpu;
 }				t_view;
 
 int				mouse_press(int b, int x, int y, t_view *v);
@@ -103,6 +109,7 @@ long double		julia(int x, int y, t_complex cxy, t_view *v);
 void			setup_julia(t_fractal *f);
 t_complex		screen_to_complex(int x, int y, t_view *v);
 char			*load_cl_file(char *fname);
-void		draw_gpu_fractal(t_view *v);
-void		init_kernel(t_cl *cl);
+void			draw_parallel(t_view *v, int gpu);
+void			init_kernel(t_cl *cl, int device_type);
+void			throw_kernel(char *errmsg, int code);
 #endif

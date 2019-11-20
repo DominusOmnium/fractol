@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 12:07:58 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/11/15 14:51:04 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/11/20 16:13:36 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void				setup_julia(t_fractal *f)
 	f->type = fr_julia;
 	f->r_start = -2;
 	f->r_end = 2;
-	f->i_start = -2;
+	f->i_start = -1;
 	f->i_end = f->i_start + (f->r_end - f->r_start) * HEIGHT / (double)WIDTH;
 	f->p_width = (f->r_end - f->r_start) / WIDTH;
 	f->p_height = (f->i_end - f->i_start) / HEIGHT;

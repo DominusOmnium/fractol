@@ -6,7 +6,7 @@
 #    By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/18 12:08:40 by dkathlee          #+#    #+#              #
-#    Updated: 2019/11/19 15:13:25 by dkathlee         ###   ########.fr        #
+#    Updated: 2019/11/20 13:35:32 by dkathlee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRCDIR = srcs/
 INCDIR = includes/
 OBJDIR = obj/
 
-SRCS =	main.c init.c draw.c color.c mandelbrot.c julia.c keyboard_control.c mouse_control.c load_cl_file.c \
+SRCS =	main.c init.c draw.c color.c mandelbrot.c julia.c keyboard_control.c mouse_control.c load_cl_file.c init_opencl.c draw_gpu.c \
 
 OBJS = $(addprefix $(OBJDIR), $(SRCS:.c=.o))
 

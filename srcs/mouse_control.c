@@ -6,34 +6,44 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 14:57:53 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/11/15 15:31:12 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/11/20 16:56:13 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-int				mouse_press(int b, int x, int y, t_view *v)
+static void		zoom(int b, int x, int y, t_view *v)
 {
 	long double	deltax;
 	long double	deltay;
+	long double	perc_x;
+	long double	perc_y;
 
-	deltax = (v->fract.r_end - v->fract.r_start) * (v->shift == true ? 0.1 : 0.01);
-	deltay = (v->fract.i_end - v->fract.i_start) * (v->shift == true ? 0.1 : 0.01);
-	printf("%d\n", v->shift);
+	perc_x = (long double)x / WIDTH;
+	perc_y = (long double)y / HEIGHT;
+	deltax = (v->fract.r_end - v->fract.r_start) *
+									(v->shift == true ? 0.1 : 0.01);
+	deltay = (v->fract.i_end - v->fract.i_start) *
+									(v->shift == true ? 0.1 : 0.01);
 	if (b == BTN_MOUSE_SCROLL_UP || b == BTN_MOUSE_SCROLL_LEFT)
 	{
-		v->fract.r_start += deltax;
-		v->fract.r_end -= deltax;
-		v->fract.i_start += deltay;
-		v->fract.i_end -= deltay;
+		v->fract.r_start += deltax * perc_x * 2;
+		v->fract.r_end -= deltax * (1.0 - perc_x) * 2;
+		v->fract.i_start += deltay * perc_y * 2;
+		v->fract.i_end -= deltay * (1.0 - perc_y) * 2;
 	}
 	else if (b == BTN_MOUSE_SCROLL_DOWN || b == BTN_MOUSE_SCROLL_RIGHT)
 	{
-		v->fract.r_start -= deltax;
-		v->fract.r_end += deltax;
-		v->fract.i_start -= deltay;
-		v->fract.i_end += deltay;
+		v->fract.r_start -= deltax * perc_x * 2;
+		v->fract.r_end += deltax * (1.0 - perc_x) * 2;
+		v->fract.i_start -= deltay * perc_y * 2;
+		v->fract.i_end += deltay * (1.0 - perc_y) * 2;
 	}
+}
+
+int				mouse_press(int b, int x, int y, t_view *v)
+{
+	zoom(b, x, y, v);
 	if (b == BTN_MOUSE_LEFT && x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
 	{
 		v->mouse.is_pressed = true;

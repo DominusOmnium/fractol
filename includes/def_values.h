@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 12:20:41 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/11/19 19:59:13 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/11/20 15:14:24 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,5 @@
 # define MOUSE_RELESE_EVENT	5
 # define MOUSE_MOVE_EVENT	6
 # define WIND_CLOSE_EVENT	17
+# define COLOR_TEXT_DEF		0xE8E8E8
 #endif

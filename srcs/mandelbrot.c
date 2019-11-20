@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 12:06:23 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/11/19 20:03:34 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/11/20 12:57:31 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,6 @@ void				setup_mandelbrot(t_fractal *f)
 	f->r_end = 2;
 	f->i_start = 0 - (f->r_end - f->r_start) / 2 * HEIGHT / (double)WIDTH;
 	f->i_end = 0 + (f->r_end - f->r_start) / 2 * HEIGHT / (double)WIDTH;
-	f->p_width = (f->r_end - f->r_start) / HEIGHT * HEIGHT / (double)WIDTH;
-	f->p_height = (f->i_end - f->i_start) / WIDTH;
+	f->p_width = (f->r_end - f->r_start) / WIDTH;
+	f->p_height = (f->i_end - f->i_start) / HEIGHT;
 }
