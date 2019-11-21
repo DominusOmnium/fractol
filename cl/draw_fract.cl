@@ -128,70 +128,37 @@ __kernel void draw_fract(__global char	*output,
 	}
 	else
 	{
-		c.r = r_start + j * p_width;
-		c.i = i_start + i * p_height;
+		t_complexl	t;
+		t_complexl	t2;
+		int			q;
+		double		p;
+
+		c.r = (r_start + j * p_width);
+		c.i = (i_start + i * p_height);
+		n = 0;
+		q = 100000;
+		while ((c.r*c.r + c.i*c.i < q)&& (n < max_iter))
+		{
+			t.r = c.r;
+			t.i = c.i;
+			t2.i = t.i * t.i;
+			t2.r = t.r * t.r;
+			p = (t2.r + t2.i) * (t2.r + t2.i);
+			c.r = 2.0 / 3.0 * t.r + (t2.r - t2.i) / (3.0 * p);
+			c.i = 2.0 / 3.0 * t.i * (1.0 - t.r / p);
+			n++;
+		}
 		c2.r = c.r * c.r;
 		c2.i = c.i * c.i;
-		cxy.i = i_start + i * p_height;
-		cxy.r = r_start + j * p_width;
-		n = 0;
-		while (c2.r + c2.i <= 256 && n < max_iter)
-		{
-			c.i = 2 * c.r * c.i + cxy.i;
-			c.r = c2.r - c2.i + cxy.r;
-			c2.r = c.r * c.r;
-			c2.i = c.i * c.i;
-			n++;
-		}
-
-
-		while ((c2.r + c2.i < 4) && (c2.r + c2.i > -4) && (n < max_iter))
-		{
-			t = z;
-			p = Math.Pow(Math.Pow(t.x, 2) + Math.Pow(t.y, 2), 2);
-			z.x = 2 / 3 * t.x + (Math.Pow(t.x, 2) - Math.Pow(t.y, 2)) / (3 * p);
-			z.y = 2 / 3 * t.y * (1 - t.x / p);
-			d.x = Math.Abs(t.x - z.x);
-			d.y = Math.Abs(t.y - z.y);
-			n++;
-		}
-
-
+		m = (double)n + (1.0 - log2(log2((c2.r + c2.i) / (smooth == 1 ? 1 : q))));
+		int g = (int)(m * 10) % 255;
+		int b = (int)(m * 20) % 255;
+		((__global unsigned int*)output)[gid] = b | g << 8;
+		return ;
 	}
 	m = (double)n + (smooth == 1 ? (1.0 - log2(log2(c2.r + c2.i))) : 0);
 	((__global unsigned int*)output)[gid] = hsv_to_rgb(255 * m / max_iter, 255, 255 * (m < max_iter));
 }
-
-
-public void Draw(int mx, int my)
-        {
-            int n;
-            double p;
-            Complex z, t, d = new Complex();
- 
-            for (int y = -my; y < my; y++)
-                for (int x = -mx; x < mx; x++)
-                {
-                    n = 0;
-                    z.x = x * 0.005;
-                    z.y = y * 0.005;
-                    d = z;
-                    while ((Math.Pow(z.x, 2) + Math.Pow(z.y, 2) < max) && (Math.Pow(d.x, 2) + Math.Pow(d.y, 2) > min) && (n < iter))
-                    {
-                        t = z;
-                        p = Math.Pow(Math.Pow(t.x, 2) + Math.Pow(t.y, 2), 2);
-                        z.x = 2 / 3 * t.x + (Math.Pow(t.x, 2) - Math.Pow(t.y, 2)) / (3 * p);
-                        z.y = 2 / 3 * t.y * (1 - t.x / p);
-                        d.x = Math.Abs(t.x - z.x);
-                        d.y = Math.Abs(t.y - z.y);
-                        n++;
-                    }
-                    pen.Color = Color.FromArgb(255, (n * 9) % 255, 0, (n * 9) % 255);
-                    g.DrawLine(pen, mx + x, my + y, mx + x + 1, my + y);
-                }
-        }
-
-
 
 __kernel void draw_fract_long(__global char	*output,
 							int				max_iter,
@@ -254,21 +221,33 @@ __kernel void draw_fract_long(__global char	*output,
 	}
 	else
 	{
-		c.r = 0;
-		c.i = 0;
-		c2.r = 0;
-		c2.i = 0;
-		cxy.i = i_start + i * p_height;
-		cxy.r = r_start + j * p_width;
+		t_complexl	t;
+		t_complexl	t2;
+		int			q;
+		long double	p;
+
+		c.r = (r_start + j * p_width);
+		c.i = (i_start + i * p_height);
 		n = 0;
-		while (c2.r + c2.i <= 256 && n < max_iter)
+		q = 100000;
+		while ((c.r*c.r + c.i*c.i < q)&& (n < max_iter))
 		{
-			c.i = 4 * c.r * c.i + cxy.i;
-			c.r = c2.r - c2.i + cxy.r;
-			c2.r = c.r * c.r;
-			c2.i = c.i * c.i;
+			t.r = c.r;
+			t.i = c.i;
+			t2.i = t.i * t.i;
+			t2.r = t.r * t.r;
+			p = (t2.r + t2.i) * (t2.r + t2.i);
+			c.r = 2.0 / 3.0 * t.r + (t2.r - t2.i) / (3.0 * p);
+			c.i = 2.0 / 3.0 * t.i * (1.0 - t.r / p);
 			n++;
 		}
+		c2.r = c.r * c.r;
+		c2.i = c.i * c.i;
+		m = (double)n + (1.0 - log2(log2((double)((c2.r + c2.i) / (smooth == 1 ? 1 : q)))));
+		int g = (int)(m * 10) % 255;
+		int b = (int)(m * 20) % 255;
+		((__global unsigned int*)output)[gid] = b | g << 8;
+		return ;
 	}
 	m = (long double)n + (smooth == 1 ? (1.0 - log2(log2((double)(c2.r + c2.i)))) : 0);
 	((__global unsigned int*)output)[gid] = hsv_to_rgb(255.0 * m / max_iter, 255, 255 * (m < max_iter));

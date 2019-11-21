@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 14:57:53 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/11/20 16:56:13 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/11/21 15:46:11 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ static void		zoom(int b, int x, int y, t_view *v)
 
 int				mouse_press(int b, int x, int y, t_view *v)
 {
+	if (v->help)
+		return (1);
 	zoom(b, x, y, v);
 	if (b == BTN_MOUSE_LEFT && x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
 	{
@@ -70,6 +72,8 @@ int				mouse_move(int x, int y, t_view *v)
 	long double	dx;
 	long double	dy;
 
+	if (v->help)
+		return (1);
 	if ((v->mouse.is_pressed == false && v->fract.type != fr_julia) || x < 0 ||
 	x >= WIDTH || y < 0 || y >= HEIGHT || (x == v->mouse.x && y == v->mouse.y))
 		return (1);

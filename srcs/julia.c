@@ -6,23 +6,23 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 12:07:58 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/11/20 16:13:36 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/11/21 15:02:51 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-long double			julia(int x, int y, t_complex cxy, t_view *v)
+long double			julia(int x, int y, t_complex cxy, t_fractal fract)
 {
 	t_complex	c;
 	t_complex	c2;
 	long double	n;
 
-	c = screen_to_complex(x, y, v);
+	c = screen_to_complex(x, y, fract);
 	c2.r = c.r * c.r;
 	c2.i = c.i * c.i;
 	n = 0;
-	while (c2.r + c2.i < 256 && n < v->fract.max_iter)
+	while (c2.r + c2.i < 256 && n < fract.max_iter)
 	{
 		c.i = 2 * c.r * c.i + cxy.i;
 		c.r = c2.r - c2.i + cxy.r;
@@ -30,9 +30,9 @@ long double			julia(int x, int y, t_complex cxy, t_view *v)
 		c2.i = c.i * c.i;
 		n++;
 	}
-	if (n == v->fract.max_iter)
+	if (n == fract.max_iter)
 		return (n);
-	return (n + (v->fract.smooth == 1 ? 1 - log(log2(fabsl(c2.r + c2.i))) : 0));
+	return (n + (fract.smooth == 1 ? 1 - log2(log2(fabsl(c2.r + c2.i))) : 0));
 }
 
 void				setup_julia(t_fractal *f)

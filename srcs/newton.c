@@ -1,44 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mandelbrot.c                                       :+:      :+:    :+:   */
+/*   newton.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/15 12:06:23 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/11/21 14:59:11 by dkathlee         ###   ########.fr       */
+/*   Created: 2019/11/21 14:33:15 by dkathlee          #+#    #+#             */
+/*   Updated: 2019/11/21 15:01:13 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-long double			mandelbrot(t_complex cxy, t_fractal f)
+long double	newton(t_complex c, t_fractal f)
 {
-	t_complex	c;
-	t_complex	c2;
+	t_complex	t;
+	t_complex	t2;
 	int			n;
+	long double	p;
 
-	c.r = 0;
-	c.i = 0;
-	c2.r = 0;
-	c2.i = 0;
 	n = 0;
-	while (c2.r + c2.i <= 256 && n < f.max_iter)
+	while ((c.r * c.r + c.i * c.i < 10000) && (n < f.max_iter))
 	{
-		c.i = 2 * c.r * c.i + cxy.i;
-		c.r = c2.r - c2.i + cxy.r;
-		c2.r = c.r * c.r;
-		c2.i = c.i * c.i;
+		t.r = c.r;
+		t.i = c.i;
+		t2.i = t.i * t.i;
+		t2.r = t.r * t.r;
+		p = (t2.r + t2.i) * (t2.r + t2.i);
+		c.r = 2.0 / 3.0 * t.r + (t2.r - t2.i) / (3.0 * p);
+		c.i = 2.0 / 3.0 * t.i * (1.0 - t.r / p);
 		n++;
 	}
-	return (n + (f.smooth == 1 ? 1 - log2(log2(fabsl(c2.r + c2.i))) : 0));
+	return ((long double)n + (1.0 - log2(log2((double)((c.r * c.r + c.i * c.i) /
+											(f.smooth == 1 ? 1 : 10000))))));
 }
 
-void				setup_mandelbrot(t_fractal *f)
+void		setup_newton(t_fractal *f)
 {
-	f->type = fr_mandelbrot;
-	f->r_start = -2;
-	f->r_end = 2;
+	f->type = fr_newton;
+	f->r_start = -1;
+	f->r_end = 1;
 	f->i_start = 0 - (f->r_end - f->r_start) / 2 * HEIGHT / (double)WIDTH;
 	f->i_end = 0 + (f->r_end - f->r_start) / 2 * HEIGHT / (double)WIDTH;
 	f->p_width = (f->r_end - f->r_start) / WIDTH;

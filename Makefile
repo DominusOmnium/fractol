@@ -6,7 +6,7 @@
 #    By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/18 12:08:40 by dkathlee          #+#    #+#              #
-#    Updated: 2019/11/20 13:35:32 by dkathlee         ###   ########.fr        #
+#    Updated: 2019/11/21 16:12:21 by dkathlee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ SRCDIR = srcs/
 INCDIR = includes/
 OBJDIR = obj/
 
-SRCS =	main.c init.c draw.c color.c mandelbrot.c julia.c keyboard_control.c mouse_control.c load_cl_file.c init_opencl.c draw_gpu.c \
+SRCS =	main.c init.c draw.c color.c mandelbrot.c julia.c keyboard_control.c \
+		mouse_control.c load_cl_file.c init_opencl.c draw_gpu.c newton.c gui.c \
 
 OBJS = $(addprefix $(OBJDIR), $(SRCS:.c=.o))
 
@@ -27,6 +28,7 @@ MLXDIR = mlx/
 MLXLIB = $(addprefix $(MLXDIR), mlx.a)
 MLXINC = -I $(MLXDIR)
 MLXLNK = -l mlx -framework OpenGL -framework AppKit
+OPENCLLNK = -framework OpenCL
 
 FTDIR = libft/
 FTLIB = $(addprefix $(FTDIR), libft.a)
@@ -45,7 +47,7 @@ $(FTLIB):
 	make -C $(FTDIR)
 
 $(NAME): $(OBJS)
-	$(CC) $(OBJS) -framework OpenCL $(MLXLNK) $(FTLNK) -lm -o $(NAME)
+	$(CC) $(OBJS) $(OPENCLLNK) $(MLXLNK) $(FTLNK) -lm -o $(NAME)
 
 linux:
 	gcc -o q $(addprefix $(SRCDIR), $(SRCS)) $(FTLIB) -I $(INCDIR) $(MLXINC) $(FTINC) mlx_linux/libmlx_Linux.a -lm -lXext -lX11

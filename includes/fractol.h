@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 12:38:51 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/11/20 17:14:06 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/11/21 15:18:10 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 typedef enum
 {
-	fr_julia, fr_mandelbrot, test
+	fr_julia, fr_mandelbrot, fr_newton
 }	t_fractal_type;
 typedef enum
 {
@@ -86,6 +86,7 @@ typedef struct	s_view
 	int			line_size;
 	int			endian;
 	int			shift;
+	int			help;
 	t_draw_type	draw_type;
 	t_mouse		mouse;
 	t_fractal	fract;
@@ -105,11 +106,15 @@ void			draw_fractal(t_view *v);
 int				hsv_to_rgb(int h, int s, int v);
 long double		mandelbrot(t_complex cxy, t_fractal f);
 void			setup_mandelbrot(t_fractal *f);
-long double		julia(int x, int y, t_complex cxy, t_view *v);
+long double		julia(int x, int y, t_complex cxy, t_fractal fract);
 void			setup_julia(t_fractal *f);
-t_complex		screen_to_complex(int x, int y, t_view *v);
+long double		newton(t_complex c, t_fractal f);
+void			setup_newton(t_fractal *f);
+t_complex		screen_to_complex(int x, int y, t_fractal fract);
 char			*load_cl_file(char *fname);
 void			draw_parallel(t_view *v, int gpu);
 void			init_kernel(t_cl *cl, int device_type);
 void			throw_kernel(char *errmsg, int code);
+void			draw_fract_gui(t_view *v);
+void			draw_help(t_view *v);
 #endif

@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 13:01:22 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/11/15 15:20:04 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/11/21 15:16:00 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # define BTN_MOUSE_SCROLL_RIGHT	7
 # define BTN_Q					12
 # define BTN_W					13
+# define BTN_E					14
+# define BTN_H					4
 # define BTN_A					0
 # define BTN_S					1
 # define BTN_D					2

@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:36:01 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/11/20 17:17:04 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/11/21 15:27:32 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,14 @@ static int		free_all(t_view **view)
 	return (0);
 }
 
-void				setup_test(t_fractal *f)
-{
-	f->type = test;
-	f->r_start = -2;
-	f->r_end = 2;
-	f->i_start = 0 - (f->r_end - f->r_start) / 2 * HEIGHT / (double)WIDTH;
-	f->i_end = 0 + (f->r_end - f->r_start) / 2 * HEIGHT / (double)WIDTH;
-	f->p_width = (f->r_end - f->r_start) / WIDTH;
-	f->p_height = (f->i_end - f->i_start) / HEIGHT;
-}
-
 int				init_fractal(t_fractal *f, char *fr)
 {
 	if (ft_strcmp(fr, "julia") == 0)
 		setup_julia(f);
 	else if (ft_strcmp(fr, "mandelbrot") == 0)
 		setup_mandelbrot(f);
-	else if (ft_strcmp(fr, "test") == 0)
-		setup_test(f);
+	else if (ft_strcmp(fr, "newton") == 0)
+		setup_newton(f);
 	else
 		return (0);
 	f->max_iter = 25;
@@ -62,6 +51,7 @@ int				init_view(t_view **view)
 	(*view)->mouse.prev_x = -1;
 	(*view)->mouse.prev_y = -1;
 	(*view)->shift = false;
+	(*view)->help = false;
 	(*view)->draw_type = gpu_parallel;
 	return (1);
 }
