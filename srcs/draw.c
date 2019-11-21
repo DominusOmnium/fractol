@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 13:24:18 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/11/21 15:21:33 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/11/21 17:25:26 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static void	draw_cpu1(t_view *v, t_complex c, int i, int j)
 	long double	n;
 	t_color		color;
 
+	n = 0;
 	if (v->fract.type == fr_mandelbrot || v->fract.type == fr_newton)
 		c.r = v->fract.r_start + j * v->fract.p_width;
 	if (v->fract.type == fr_mandelbrot)
@@ -45,7 +46,7 @@ static void	draw_cpu1(t_view *v, t_complex c, int i, int j)
 	if (v->fract.type == fr_newton)
 	{
 		n = newton(c, v->fract);
-		color = (t_color){(int)(n * 20) % 255, (int)(n * 10) % 255, 0, 0};
+		color = (t_color){{(int)(n * 20) % 255, (int)(n * 10) % 255, 0, 0}};
 	}
 	put_pixel_img(j, i, color.value, v);
 }
@@ -54,7 +55,6 @@ static void	draw_cpu(t_view *v)
 {
 	int			i;
 	int			j;
-	long double	n;
 	t_complex	c;
 
 	if (v->fract.type == fr_julia)
