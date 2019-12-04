@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 13:03:24 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/12/04 12:55:37 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/12/04 13:08:08 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ int			key_press(int k, t_view *v)
 	if (k == BTN_H && v->help)
 		draw_help(v);
 	if (k == BTN_NUM_MIN || k == BTN_NUM_PLUS || k == BTN_S || k == BTN_Q ||
-		k == BTN_W || k == BTN_E || (k == BTN_H && !v->help) || k == BTN_R ||
-		rmc_handler(v, k) == 1)
+		k == BTN_W || k == BTN_E || (k == BTN_H && !v->help)
+												|| rmc_handler(v, k) == 1)
 		draw_fractal(v);
 	return (1);
 }
