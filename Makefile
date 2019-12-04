@@ -6,7 +6,7 @@
 #    By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/18 12:08:40 by dkathlee          #+#    #+#              #
-#    Updated: 2019/11/21 17:23:34 by dkathlee         ###   ########.fr        #
+#    Updated: 2019/12/04 12:00:52 by dkathlee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRCS =	main.c init.c draw.c color.c mandelbrot.c julia.c keyboard_control.c \
 OBJS = $(addprefix $(OBJDIR), $(SRCS:.c=.o))
 
 CC = gcc
-CFLAGS = -g -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 MLXDIR = mlx/
 MLXLIB = $(addprefix $(MLXDIR), mlx.a)

@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 13:01:22 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/11/21 15:16:00 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/12/04 12:09:57 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,14 @@
 # define BTN_P					35
 # define BTN_C					8
 # define BTN_R					15
+# define BTN_L					37
 # define BTN_ESC				53
 # define BTN_NUM_MIN			78
 # define BTN_NUM_PLUS			69
 # define BTN_LSHIFT				257
 # define BTN_RSHIFT				258
+# define BTN_LEFT				123
+# define BTN_RIGHT				124
+# define BTN_UP					126
+# define BTN_DOWN				125
 #endif

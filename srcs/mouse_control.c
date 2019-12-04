@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 14:57:53 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/11/21 15:46:11 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/12/04 12:55:14 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int				mouse_move(int x, int y, t_view *v)
 
 	if (v->help)
 		return (1);
-	if ((v->mouse.is_pressed == false && v->fract.type != fr_julia) || x < 0 ||
+	if ((!v->mouse.is_pressed && v->fract.type != fr_julia) || x < 0 ||
 	x >= WIDTH || y < 0 || y >= HEIGHT || (x == v->mouse.x && y == v->mouse.y))
 		return (1);
 	v->mouse.prev_x = v->mouse.x;

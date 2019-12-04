@@ -39,6 +39,33 @@ static int 			hsv_to_rgb(int h, int s, int v)
 	return (q | p << 8 | v << 16);
 }
 
+static int			get_color(int n, int max_iter)
+{
+	double c;
+
+	c = n / (double)max_iter;
+	if (c < 0.1)
+		return (0xf83463);
+	else if (c < 0.2)
+		return (0x6284fa);
+	else if (c < 0.3)
+		return (0xccb472);
+	else if (c < 0.4)
+		return (0xc0b402);
+	else if (c < 0.5)
+		return (0xc174ba);
+	else if (c < 0.6)
+		return (0x5cb472);
+	else if (c < 0.7)
+		return (0xcabf12);
+	else if (c < 0.8)
+		return (0xffbbaa);
+	else if (c < 0.9)
+		return (0xffffff);
+	else
+		return (0x000000);
+}
+
 static t_complex	screen_to_complex(	int		x,
 										int		y,
 										double	i_start,
@@ -76,7 +103,8 @@ __kernel void draw_fract(__global char	*output,
 						double			i_start,
 						double			r_start,
 						double			p_height,
-						double			p_width)
+						double			p_width,
+						int				color_type)
 {
 	t_complex	cxy;
 	t_complex	c;
@@ -156,8 +184,13 @@ __kernel void draw_fract(__global char	*output,
 		((__global unsigned int*)output)[gid] = b | g << 8;
 		return ;
 	}
-	m = (double)n + (smooth == 1 ? (1.0 - log2(log2(c2.r + c2.i))) : 0);
-	((__global unsigned int*)output)[gid] = hsv_to_rgb(255 * m / max_iter, 255, 255 * (m < max_iter));
+	if (color_type == 2)
+		((__global unsigned int*)output)[gid] = get_color(n, max_iter);
+	else
+	{
+		m = (double)n + (smooth == 1 ? (1.0 - log2(log2(c2.r + c2.i))) : 0);
+		((__global unsigned int*)output)[gid] = hsv_to_rgb(255 * m / max_iter, 255, 255 * (m < max_iter));
+	}
 }
 
 __kernel void draw_fract_long(__global char	*output,
@@ -169,7 +202,8 @@ __kernel void draw_fract_long(__global char	*output,
 							long double		i_start,
 							long double		r_start,
 							long double		p_height,
-							long double		p_width)
+							long double		p_width,
+							int				color_type)
 {
 	t_complexl	cxy;
 	t_complexl	c;
@@ -249,6 +283,11 @@ __kernel void draw_fract_long(__global char	*output,
 		((__global unsigned int*)output)[gid] = b | g << 8;
 		return ;
 	}
-	m = (long double)n + (smooth == 1 ? (1.0 - log2(log2((double)(c2.r + c2.i)))) : 0);
-	((__global unsigned int*)output)[gid] = hsv_to_rgb(255.0 * m / max_iter, 255, 255 * (m < max_iter));
+	if (color_type == 2)
+		((__global unsigned int*)output)[gid] = get_color(n, max_iter);
+	else
+	{
+		m = (double)n + (smooth == 1 ? (1.0 - log2(log2((double)(c2.r + c2.i)))) : 0);
+		((__global unsigned int*)output)[gid] = hsv_to_rgb(255 * m / max_iter, 255, 255 * (m < max_iter));
+	}
 }

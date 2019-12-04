@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 12:38:51 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/11/21 15:18:10 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/12/04 12:54:15 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct	s_fractal
 	int				max_iter;
 	long double		p_width;
 	long double		p_height;
+	int				color_type;
 	int				smooth;
 }				t_fractal;
 typedef struct	s_view

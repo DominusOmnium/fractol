@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 13:32:28 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/11/20 15:46:48 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/12/04 12:54:08 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static void	set_kernel_args_gpu(t_cl *cl, t_view *v)
 	err |= clSetKernelArg(cl->kernel, 7, sizeof(double), &r_start);
 	err |= clSetKernelArg(cl->kernel, 8, sizeof(double), &p_height);
 	err |= clSetKernelArg(cl->kernel, 9, sizeof(double), &p_width);
+	err |= clSetKernelArg(cl->kernel, 10, sizeof(int), &v->fract.color_type);
 	if (err != CL_SUCCESS)
 		throw_kernel("Failed to set kernel arguments", err);
 }
@@ -56,6 +57,7 @@ static void	set_kernel_args_cpu(t_cl *cl, t_view *v)
 												&v->fract.p_height);
 	err |= clSetKernelArg(cl->kernel, 9, sizeof(long double),
 												&v->fract.p_width);
+	err |= clSetKernelArg(cl->kernel, 10, sizeof(int), &v->fract.color_type);
 	if (err != CL_SUCCESS)
 		throw_kernel("Failed to set kernel arguments", err);
 }

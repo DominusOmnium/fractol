@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:36:01 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/11/21 15:27:32 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/12/04 12:54:23 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int				init_fractal(t_fractal *f, char *fr)
 		return (0);
 	f->max_iter = 25;
 	f->smooth = true;
+	f->color_type = 1;
 	return (1);
 }
 
