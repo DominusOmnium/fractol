@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 15:03:46 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/12/04 12:09:02 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/12/04 12:57:46 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,10 @@ static void	draw_help2(t_view *v)
 	mlx_string_put(v->mlx, v->win, WIDTH / 2 - 300, HEIGHT / 2 + 150,
 		COLOR_TEXT_DEF, "Change color:           C");
 	mlx_string_put(v->mlx, v->win, WIDTH / 2 - 300, HEIGHT / 2 + 200,
-		COLOR_TEXT_DEF, "Lock/Unlock Julia:      L");
-	mlx_string_put(v->mlx, v->win, WIDTH / 2 - 300, HEIGHT / 2 + 250,
 		COLOR_TEXT_DEF, "Reset:                  R");
-	mlx_string_put(v->mlx, v->win, WIDTH / 2 - 300, HEIGHT / 2 + 300,
+	mlx_string_put(v->mlx, v->win, WIDTH / 2 - 300, HEIGHT / 2 + 250,
 		COLOR_TEXT_DEF, "Close programm:         ESC");
-	mlx_string_put(v->mlx, v->win, WIDTH / 2 - 300, HEIGHT / 2 + 500,
+	mlx_string_put(v->mlx, v->win, WIDTH / 2 - 300, HEIGHT / 2 + 400,
 		COLOR_TEXT_DEF, "PRESS H TO CLOSE HELP");
 }
 
